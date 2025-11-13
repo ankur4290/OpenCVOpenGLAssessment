@@ -28,8 +28,9 @@ Frame flow: Camera -> JNI -> OpenCV (C++) -> OpenGL Rendering
 1. Clone the repository
 2. Open in Android Studio
 3. Ensure NDK is installed and configured
-4. Download OpenCV Android SDK and place in `app/src/main/jniLibs`
-5. Build and run on device with camera
+4. Download OpenCV Android SDK (version 4.x) from https://opencv.org/releases/
+5. Extract the SDK and place the contents in `app/src/main/jniLibs/opencv/`
+6. Build and run on device with camera
 
 ## Screenshots
 

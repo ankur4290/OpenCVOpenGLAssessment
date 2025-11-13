@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.SurfaceTexture
 import android.opengl.*
 import android.util.Log
+import org.opencv.core.Mat
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
@@ -18,6 +19,7 @@ class OpenGLRenderer(private val context: Context) : GLSurfaceView.Renderer {
     private var positionHandle: Int = 0
     private var texCoordHandle: Int = 0
     private var textureHandle: Int = 0
+    private var processedMat: Mat? = null
 
     private val vertexShaderCode = """
         attribute vec4 aPosition;
@@ -94,6 +96,8 @@ class OpenGLRenderer(private val context: Context) : GLSurfaceView.Renderer {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
 
         surfaceTexture?.updateTexImage()
+
+        // TODO: Process frame with OpenCV and update texture
 
         GLES20.glUseProgram(program)
 

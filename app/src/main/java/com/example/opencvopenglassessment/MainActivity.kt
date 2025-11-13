@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.SurfaceTexture
 import android.hardware.camera2.*
+import android.opengl.GLSurfaceView
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
@@ -13,22 +14,44 @@ import android.view.TextureView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import org.opencv.android.OpenCVLoader
+import org.opencv.core.Mat
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var textureView: TextureView
+    private lateinit var glSurfaceView: GLSurfaceView
     private lateinit var cameraManager: CameraManager
     private var cameraDevice: CameraDevice? = null
     private var captureSession: CameraCaptureSession? = null
     private lateinit var backgroundHandler: Handler
     private lateinit var backgroundThread: HandlerThread
+    private lateinit var renderer: OpenGLRenderer
+    private var surfaceTexture: SurfaceTexture? = null
+
+    companion object {
+        init {
+            System.loadLibrary("native-lib")
+            if (!OpenCVLoader.initDebug()) {
+                Log.e("OpenCV", "OpenCV initialization failed")
+            } else {
+                Log.d("OpenCV", "OpenCV initialization succeeded")
+            }
+        }
+    }
+
+    external fun processFrame(addrRgba: Long, addrGray: Long)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        textureView = findViewById(R.id.textureView)
+        glSurfaceView = findViewById(R.id.glSurfaceView)
         cameraManager = getSystemService(CAMERA_SERVICE) as CameraManager
+
+        renderer = OpenGLRenderer(this)
+        glSurfaceView.setEGLContextClientVersion(2)
+        glSurfaceView.setRenderer(renderer)
+        glSurfaceView.renderMode = GLSurfaceView.RENDERMODE_CONTINUOUSLY
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 1)
@@ -38,10 +61,9 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         startBackgroundThread()
-        if (textureView.isAvailable) {
+        surfaceTexture = renderer.getSurfaceTexture()
+        if (surfaceTexture != null) {
             openCamera()
-        } else {
-            textureView.surfaceTextureListener = textureListener
         }
     }
 
@@ -63,18 +85,6 @@ class MainActivity : AppCompatActivity() {
         } catch (e: InterruptedException) {
             Log.e(TAG, e.toString())
         }
-    }
-
-    private val textureListener = object : TextureView.SurfaceTextureListener {
-        override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
-            openCamera()
-        }
-
-        override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {}
-
-        override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean = true
-
-        override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {}
     }
 
     private fun openCamera() {
@@ -108,9 +118,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun createCameraPreviewSession() {
         try {
-            val texture = textureView.surfaceTexture
-            texture?.setDefaultBufferSize(640, 480)
-            val surface = Surface(texture)
+            surfaceTexture?.setDefaultBufferSize(640, 480)
+            val surface = Surface(surfaceTexture)
 
             val captureRequestBuilder = cameraDevice!!.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW)
             captureRequestBuilder.addTarget(surface)
