@@ -23,6 +23,6 @@
 
 ## Documentation and Submission
 - [x] Add README.md with setup instructions and architecture explanation
-- [ ] Add screenshots/GIF placeholders
+- [x] Add screenshots/GIF placeholders
 - [x] Commit changes with meaningful messages
 - [ ] Push to public GitHub repo
