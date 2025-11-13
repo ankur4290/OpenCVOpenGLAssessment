@@ -4,14 +4,14 @@
 - [x] Initialize Git repository
 - [x] Create Android project structure (Gradle files, directories)
 - [x] Set up NDK and CMake for JNI
-- [ ] Download and integrate OpenCV Android SDK
+- [x] Download and integrate OpenCV Android SDK
 - [x] Create modular directories (/app, /jni, /gl, /web)
 
 ## Android App Implementation
 - [x] Implement camera capture using Camera2 API
 - [x] Set up JNI interface for C++ communication
 - [x] Implement OpenGL ES renderer for displaying processed frames
-- [ ] Integrate frame processing pipeline (Camera -> JNI -> OpenCV -> OpenGL)
+- [x] Integrate frame processing pipeline (Camera -> JNI -> OpenCV -> OpenGL)
 
 ## C++ OpenCV Processing
 - [x] Implement Canny Edge Detection in C++
