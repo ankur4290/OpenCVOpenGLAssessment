@@ -47,7 +47,12 @@ Frame flow: Camera -> JNI -> OpenCV (C++) -> OpenGL Rendering
 
 ## Screenshots
 
-(TODO: Add screenshots/GIF after testing on device/emulator)
+### Android App Screenshots
+*(Note: Screenshots will be added after testing on Android device/emulator. The app requires camera permissions and OpenGL ES 2.0 support.)*
+
+### Web Viewer Screenshot
+![Web Viewer](web/screenshot.png)
+*(Placeholder - actual screenshot to be captured after opening web/index.html in browser)*
 
 ## Dependencies
 
