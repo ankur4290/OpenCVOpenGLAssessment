@@ -34,7 +34,7 @@ Frame flow: Camera -> JNI -> OpenCV (C++) -> OpenGL Rendering
 
 ## Screenshots
 
-(TODO: Add screenshots/GIF of working app)
+(TODO: Add screenshots/GIF of working app - would require running on device/emulator)
 
 ## Dependencies
 
