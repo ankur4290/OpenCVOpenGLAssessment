@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenCV OpenGL Web Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #imageContainer {
+            text-align: center;
+            margin: 20px 0;
+        }
+        #stats {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>OpenCV OpenGL Web Viewer</h1>
+    <div id="imageContainer">
+        <img id="processedImage" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==" alt="Processed Frame" width="640" height="480">
+    </div>
+    <div id="stats">
+        <p>FPS: <span id="fps">0</span></p>
+        <p>Resolution: <span id="resolution">640x480</span></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
