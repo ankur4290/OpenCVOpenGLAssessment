@@ -32,9 +32,22 @@ Frame flow: Camera -> JNI -> OpenCV (C++) -> OpenGL Rendering
 5. Extract the SDK and place the contents in `app/src/main/jniLibs/opencv/`
 6. Build and run on device with camera
 
+## Testing Results
+
+### ✅ TypeScript Web Viewer
+- TypeScript compilation successful
+- Web page loads correctly with dummy frame
+- FPS and resolution stats display properly
+
+### ⚠️ Android App
+- Gradle build files configured correctly
+- Requires Android Studio for full compilation and testing
+- OpenCV SDK integration needs manual setup
+- Runtime testing requires device with camera permissions
+
 ## Screenshots
 
-(TODO: Add screenshots/GIF of working app - would require running on device/emulator)
+(TODO: Add screenshots/GIF after testing on device/emulator)
 
 ## Dependencies
 
